@@ -1,5 +1,5 @@
 # https://vijos.org/p/1002
-
+import sys
 def main():
   #  handle=sys.stdin
   handle = open("1002.txt", "r") 
@@ -21,7 +21,9 @@ def main():
     ans.append(min( \
       ans[max(0, i - max_step): max(-1, i - min_step) + 1] + [length_bridge] \
     ) + (i in stone_locations))
-  print min(ans[length_bridge: length_bridge + max_step * min_step + 1])
+  sys.stdout.write(str(\
+    min(ans[length_bridge: length_bridge + max_step * min_step + 1])
+  ))
   
 if __name__ == '__main__':
   main()
