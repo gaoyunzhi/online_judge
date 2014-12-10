@@ -76,24 +76,21 @@ class Solver():
 def main():
   #  handle=sys.stdin
   handle = open("1005.txt", "r") 
-  string = handle.readline()
+  string = handle.readline().strip()
   sol = Solver(string)
   sys.stdout.write(str(sol.getAns()))
    
 def test():
-  string = ''.join(map(str, xrange(1, 10000)))
-  cache = {}
-  for i in xrange(10000):
-
-    for j in xrange(i, 1000):
-
+  string = ''.join(map(str, xrange(1, 100000)))
+  for i in xrange(len(string)):
+    if random.random() > 0.005: continue
+    for j in xrange(i, len(string)):
+      if random.random() > 0.005: continue
       substring = string[i: j + 1]
-      if substring in cache: 
-        continue
-      if Solver(substring).getAns() != i + 1:
+      ind = string.find(substring)
+      if Solver(substring).getAns() != ind + 1:
         print '--', i, j
         print substring, Solver(substring).getAns()
-      cache[substring] = i + 1
 
 
   # print Solver(string[:100]).getAns() == 1
@@ -112,5 +109,5 @@ def test():
 
 
 if __name__ == '__main__':
-  # main()
-  test()
+  main()
+  # test()
