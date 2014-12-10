@@ -20,6 +20,7 @@ class Solver():
           .replace(str(top_second), '', 1)
         cur_difference = \
           self._partsDifference(modified_string) + top_difference * multiplier
+        print cur_difference, modified_string
         cur_min = min(cur_difference, cur_min)
     for top in xrange(1, 10):
       if occurrence[top] >= 2:
@@ -65,7 +66,7 @@ class Solver():
 
 def main():
   #  handle=sys.stdin
-  handle = open("1039.txt", "r") 
+  handle = open("1039_2.txt", "r") 
   num_case = int(handle.readline())
   solver = Solver()
   for _ in xrange(num_case):
