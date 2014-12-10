@@ -1,4 +1,6 @@
 # https://vijos.org/p/1039
+import sys
+
 class Solver():
   def __init__(self):
     self._cache = {}
@@ -69,10 +71,12 @@ def main():
   handle = open("1039_2.txt", "r") 
   num_case = int(handle.readline())
   solver = Solver()
+  ans = []
   for _ in xrange(num_case):
     num = int(handle.readline())
     numbers = map(int, handle.readline().split())
-    print solver.solveRem(numbers)
+    ans.append(solver.solveRem(numbers))
+  sys.stdout.write('\n'.join(map(str, ans)))
    
 if __name__ == '__main__':
   main()
