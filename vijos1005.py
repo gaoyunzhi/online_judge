@@ -80,6 +80,7 @@ def main():
    
 def test():
   string = ''.join(map(str, xrange(1, 100000)))
+  print Solver('2020').getAns() == 6970
   print Solver('999').getAns() == 2588
   print Solver(string[:100]).getAns() == 1
   print Solver('1').getAns() == 1
