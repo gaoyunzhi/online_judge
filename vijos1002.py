@@ -7,8 +7,8 @@ def main():
   min_step, max_step, num_stone = map(int, handle.readline().split())
   stone_locations = map(int, handle.readline().split())
   stone_locations.sort()
-  stone_locations.append(length_bridge)
-  stone_locations = [0] + stone_locations
+
+  stone_locations = [0] + stone_locations + [length_bridge]
   new_stone_locations = [0]
   shorten = 0
   for index in xrange(num_stone + 1):
@@ -19,6 +19,7 @@ def main():
   length_bridge = new_stone_locations[-1]
   del new_stone_locations[-1]
   del new_stone_locations[0]
+  
   ans = [0]
   stone_locations = set(new_stone_locations)
   for i in xrange(1, length_bridge + max_step * min_step + 1):
