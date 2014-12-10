@@ -7,25 +7,25 @@ class Solver():
     self._string = string
     self.len = len(self._string)
     self.initMin()
-    self.updateEasyCaseMin()
-    self.updateHardCaseMin()
+    self.updateEasyCaseMin() #  where start can be extraced
+    self.updateHardCaseMin() #  where start can not be extraced
 
   def getAns(self):
-    order = len(str(self.min))
+    digit = len(str(self.min))
     ans = 0
-    for i in xrange(1, order):
+    for i in xrange(1, digit):
       ans += 9 * i * 10 ** (i - 1) 
-    ans += order * (self.min - 10 ** (order - 1))  
-    ans -= self.minpos
+    ans += digit * (self.min - 10 ** (digit - 1))  
+    ans -= self.pos
     return ans + 1
 
   def initMin(self):
     if self._string[0] == '0':
       self.min = int('1' + self._string) + 1
-      self.minpos = self.len
+      self.pos = self.len
     else:
       self.min = int(self._string)
-      self.minpos = 0
+      self.pos = 0
 
   def updateEasyCaseMin(self):
     for start_ind in xrange(self.len):
@@ -65,11 +65,11 @@ class Solver():
 
   def _updateMin(self, new_min, pos):
     if new_min == self.min:
-      self.minpos = max(self.minpos, pos)
+      self.pos = max(self.pos, pos)
       return
     if new_min < self.min:
       self.min = new_min
-      self.minpos = pos          
+      self.pos = pos          
 
 def main():
   #  handle=sys.stdin
@@ -79,23 +79,8 @@ def main():
   sys.stdout.write(str(sol.getAns()))
    
 def test():
-  print Solver('0202').min
-  print Solver('0202').getAns()
-  print Solver('0202').getAns() == 6971
-  print Solver('999').getAns() == 2588
-
   string = ''.join(map(str, xrange(1, 100000)))
-  # for i in xrange(len(string)):
-  #   if random.random() > 0.005: continue
-  #   for j in xrange(i, len(string)):
-  #     if random.random() > 0.005: continue
-  #     substring = string[i: j + 1]
-  #     ind = string.find(substring)
-  #     if Solver(substring).getAns() != ind + 1:
-  #       print '--', i, j
-  #       print substring, Solver(substring).getAns()
-
-
+  print Solver('999').getAns() == 2588
   print Solver(string[:100]).getAns() == 1
   print Solver('1').getAns() == 1
   print Solver('5').getAns() == 5
@@ -103,13 +88,20 @@ def test():
   print Solver('01').getAns() == 11
   print Solver('1011').getAns() == 10
   print Solver('12345').getAns() == 1
-  print Solver('012345').min
-  #print Solver('012345').getAns()
-  print Solver('9920').min
-  #print Solver('9920').getAns()
-  print Solver('0112').min
-  #print Solver('0112').getAns()
+  print Solver('012345').getAns() == 629595
+  print Solver('9920').getAns() == 488
+  print Solver('0112').getAns() == 3373
 
+  for i in xrange(2000):
+    if random.random() > 0.005: continue
+    for j in xrange(i, 2000):
+      if random.random() > 0.005: continue
+      substring = string[i: j + 1]
+      ind = string.find(substring)
+      if Solver(substring).getAns() != ind + 1:
+        print '- attention -'
+        print i, j
+        print substring, Solver(substring).getAns()
 
 if __name__ == '__main__':
   # main()
