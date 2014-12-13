@@ -7,9 +7,11 @@ class Solver():
 
   def solve(self, occurrence, occurrence_string):
     if len(occurrence_string) % 2 == 1:
-      return self._partsDifference(occurrence_string)
+      return self._partsDifferenceOdd(occurrence_string)
     multiplier = 10 ** (len(occurrence_string) / 2 - 1)
-    cur_min = int(occurrence_string)
+    cur_min = int(occurrence_string[:: -1])
+    if occurrence_string[:-1] == '0' * (len(occurrence_string) - 1):
+      return int(occurrence_string[1:][::-1])
     for top_difference in xrange(1, 10):
       if (top_difference - 1) * multiplier > cur_min:
         break
@@ -22,7 +24,6 @@ class Solver():
           .replace(str(top_second), '', 1)
         cur_difference = \
           self._partsDifference(modified_string) + top_difference * multiplier
-        print cur_difference, modified_string
         cur_min = min(cur_difference, cur_min)
     for top in xrange(1, 10):
       if occurrence[top] >= 2:
@@ -57,12 +58,18 @@ class Solver():
   def _partsDifference(self, occurrence):
     if len(occurrence) == 0:
       return 0
+    return int(occurrence[: (len(occurrence) + 1) / 2]) - \
+      int(occurrence[(len(occurrence) + 1) / 2 :][:: -1])
+
+  def _partsDifferenceOdd(self, occurrence):
     occurrence_modified = occurrence
     if len(occurrence) % 2 == 1:
       for index, number in enumerate(occurrence):
         if number != '0':
           occurrence_modified = number + occurrence[:index] + occurrence[index + 1:]
           break
+    if occurrence_modified[-1] == '0':
+      return int(occurrence_modified[: -1])
     return int(occurrence_modified[: (len(occurrence) + 1) / 2]) - \
       int(occurrence_modified[(len(occurrence) + 1) / 2 :][:: -1])
 
